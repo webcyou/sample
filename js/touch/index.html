@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html lang="ja-JP">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<title></title>
+<style type="text/css">
+* { margin: 0; padding: 0; }
+ul { list-style: none; }
+#touchArea {
+width: 100%;
+height: 250px;
+background: #999;
+border-bottom: #333 1px solid;
+}
+#dtlLi { padding-top: 20px; }
+#dtlLi li {
+  position: relative;
+  float: left;
+  display: block;
+  width: 33%;
+  margin-bottom: 20px;
+  padding-right: 10px;
+  text-align: right;
+  -webkit-box-sizing: border-box;
+  font-size: 14px;
+}
+#dtlLi li::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 4px;
+  top: 0;
+  width: 100%;
+  height: 14px;
+  font-size: 12px;
+  text-align: left;
+  color: #aaa;
+}
+
+#dtlLi li.startY::before { content: "start"; }
+.startY::after,
+.startX::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 4px;
+  top: -18px;
+  width: 100%;
+  height: 14px;
+  font-size: 12px;
+  text-align: left;
+  color: #333;
+}
+#dtlLi li.startY::after { content: "pageY"; }
+#dtlLi li.curY::before { content: "move"; }
+#dtlLi li.endY::before { content: "end"; }
+#dtlLi li.startX::before { content: "start"; }
+#dtlLi li.startX::after { content: "pageX"; }
+#dtlLi li.curX::before { content: "move"; }
+#dtlLi li.endX::before { content: "end"; }
+#dtlLi li.distanceX::before { content: "distanceX";}
+#dtlLi li.distanceY::before { content: "distanceY";}
+#dtlLi li.time::before { content: "time";}
+#dtlLi li.totalD::before { content: "totalD";}
+#dtlLi li.speed::before { content: "speed";}
+
+#signalLi {
+  position: absolute;
+  right: 20px;
+  top: 380px;
+}
+#signalLi li {
+  position: relative;
+  width: 90px;
+  font-size: 10px;
+}
+#signalLi li::before {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  background: #f00;
+  border: #fff 1px solid;
+  border-radius: 6px;
+}
+#signalLi li.on::before { background: #00f; }
+</style>
+</head>
+<body>
+  <div id="touchArea"></div>
+  <ul id="dtlLi">
+    <li class="startY">0</li>
+    <li class="curY">0</li>
+    <li class="endY">0</li>
+    <li class="startX">0</li>
+    <li class="curX">0</li>
+    <li class="endX">0</li>
+    <li class="distanceX">0</li>
+    <li class="distanceY">0</li>
+    <li class="time">0</li>
+    <li class="totalD">0</li>
+    <li class="speed">0</li>
+  </ul>
+  <ul id="signalLi">
+    <li>Touch Start</li>
+    <li>Touch Move</li>
+    <li>Touch End</li>
+  </ul>
+<script type="text/javascript">
+var box = document.getElementById("touchArea"),
+    dtlLi = document.getElementById("dtlLi"),
+    dtlItem = dtlLi.getElementsByTagName('li'),
+    signalLi = document.getElementById("signalLi"),
+    signalItem = signalLi.getElementsByTagName('li'),
+    startY,startX,curY,curX,endY,endX,distanceX,distanceY,startT,nowT,totalDistance,speed;
+
+box.addEventListener("touchstart", touchHandler, false);
+box.addEventListener("touchmove", touchHandler, false);
+box.addEventListener("touchend", touchHandler, false);
+
+function touchHandler(e) {
+  e.preventDefault();
+  var touch = e.touches[0];
+  
+  for(var i = 0;i < signalItem.length; i++){
+    signalItem[i].classList.remove('on');
+  }
+  
+  if(e.type == "touchstart") {
+    startY = touch.pageY;
+    startX = touch.pageX;
+    curY = touch.pageY;
+    curX = touch.pageX;
+    startT = new Date();
+    dtlItem[0].innerHTML = startY;
+    dtlItem[3].innerHTML = startX;
+    signalItem[0].classList.add('on');
+  }
+  
+  if(e.type == "touchmove") {
+    curY = touch.pageY;
+    curX = touch.pageX;
+    nowT = new Date();
+    dtlItem[1].innerHTML = curY;
+    dtlItem[4].innerHTML = curX;
+    dtlItem[8].innerHTML = nowT - startT;
+    signalItem[1].classList.add('on');
+  }
+  
+  if(e.type == "touchend") {
+    endY = curY;
+    endX = curX;
+    nowT = new Date();
+    
+    if(endX > startX){ distanceX = endX - startX; }
+    if(endX < startX){ distanceX = startX - endX; }
+    if(endX == startX){ distanceX = 0; }
+    
+    if(endY > startY){ distanceY = endY - startY; }
+    if(endY < startY){ distanceY = startY - endY; }
+    if(endY == startY){ distanceY = 0; }
+    
+    totalDistance =  Math.sqrt((endX - startX) * (endX - startX) + (endY - startY) * (endY - startY));
+
+    dtlItem[2].innerHTML = endY;
+    dtlItem[5].innerHTML = endX;
+    dtlItem[6].innerHTML = distanceX;
+    dtlItem[7].innerHTML = distanceY;
+    dtlItem[8].innerHTML = nowT - startT;
+    dtlItem[9].innerHTML = Math.round(totalDistance);
+    dtlItem[10].innerHTML = Math.round(totalDistance/((nowT - startT)/1000));
+    signalItem[2].classList.add('on');
+  }
+}
+</script>
+</body>
+</html>
