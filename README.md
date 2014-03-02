@@ -1,7 +1,7 @@
 samplefile summary
 ======
 
-## PHP 会員制サイトの制作方法 ##
+## PHP 会員制サイトテンプレート ##
 ### ディレクトリ###
 php/members/
 
