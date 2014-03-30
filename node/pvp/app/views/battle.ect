@@ -1,0 +1,43 @@
+<% extend 'layout.ect' %>
+<% block 'scripts' : %>
+<script type="text/javascript">
+var params = {
+    title: '<%= @title %>',
+    room: '<%= @room.name %>',
+    user: '<%= @user.name %>',
+    mode: '<%= @mode %>'
+  };
+</script>
+<script src="../js/battle.js" type="text/javascript"></script>
+<% end %>
+<section class="battle">
+    <div class="battleView">
+        <p class="pic battleStart"></p>
+        <p class="pic enemy"></p>
+        <ul class="handList">
+            <li class="enemy"></li>
+            <li class="you"></li>
+        </ul>
+        <p class="pic you"></p>
+    </div>
+    <p class="countTime">count:<span class="val">00:10</span></p>
+    <ul class="handList command">
+        <li class="hand01"></li>
+        <li class="hand02"></li>
+        <li class="hand03"></li>
+    </ul>
+    <div class="userDtl">
+        <p class="pic vs"><img src="../img/pic_vs.png" alt=""></p>
+        <ul class="userNameList">
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</section>
+
+<p class="modalBg"></p>
+<div class="modalWindow">
+    <p class="loding"></p>
+    <p class="txt">対戦者を待っています。。。</p>
+    <p class="backBtn"><a href="/">トップヘ</a></p>
+</div>

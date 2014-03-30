@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title><%= @title %></title>
+<link rel="stylesheet" href="/css/style.css"/>
+<script src="/socket.io/socket.io.js" type="text/javascript"></script>
+<% content 'scripts' %>
+</head>
+<body>
+<header>
+    <div class="wrap">
+        <p class="logo"><a href="http://www.webcyou.com/"><img src="../img/tit_header_logo.png" alt="web帳"></a></p>
+    </div>
+</header>
+<% content %>
+<footer>
+    <div class="wrap">
+        <p class="logo"><a href="http://www.webcyou.com/"><img src="../img/pic_foot_logo.png" alt="web帳"></a></p>
+    </div>
+</footer>
+</body>
+</html>

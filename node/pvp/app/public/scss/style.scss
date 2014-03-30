@@ -1,0 +1,335 @@
+@charset "UTF-8";
+@import "compass";
+@import "setting";
+@import "mixin-style";
+@import "reset";
+
+/* layout */
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+  font-family: $fontfamily;
+}
+header,
+footer {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  background: #333333;
+  .wrap {
+    position: relative;
+    width: $baseWidth;
+    margin: 0 auto;
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+section {
+  height: 100%;
+  min-height: 480px;
+  padding-top: 20px;
+  width: $baseWidth;
+  margin: 0 auto;
+  @include box-sizing(border-box);
+}
+
+header {
+  .logo {
+    position: absolute;
+    top: 2px;
+    left: 4px;
+  }
+}
+footer {
+  position: relative;
+  height: 27px;
+  margin-top: -28px;
+  border-top: #515151 1px solid;
+  .logo {
+    position: absolute;
+    top: 3px;
+    right: 4px;
+  }
+}
+
+h1 { padding: 15px 0 0 17px; }
+
+.titImg {
+  width: 284px;
+  margin: 14px auto 10px;
+}
+
+/* btn */
+.btn {
+  width: 288px;
+  margin: 20px auto 0;
+  border: 2px solid #cccaca;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e50000), to(#840000));
+  border-radius: 8px;
+  text-align: center;
+  line-height: 50px;
+  @include box-sizing(border-box);
+  a {
+    display: block;
+    height: 50px;
+    font-size: 20px;
+    color: #fff;
+    text-shadow: rgba(0,0,0,0.6) 2px 2px 1px;
+    text-decoration: none;
+  }
+}
+
+/* battle page */
+.handList {
+  li {
+    width: 78px;
+    height: 78px;
+    border: #4f4f4f 2px solid;
+    border-radius: 8px;
+    background: url(#{$imgPath}pic_hand.png) no-repeat;
+    background-position: left 10px;
+  }
+}
+
+.battleView {
+  position: relative;
+  height: 150px;
+  margin-top: 10px;
+  border-top: #313131 1px solid;
+  border-bottom: #313131 1px solid;
+  .pic.enemy,
+  .pic.you {
+    position: absolute;
+    width: 60px;
+    height: 90px;
+    background: url(#{$imgPath}pic_head.png) no-repeat;
+  }
+  .pic.enemy {
+    top: 3px;
+    left: 0;
+  }
+  .pic.you {
+    bottom: 0px;
+    right: 3px;
+    background-position: left -90px;
+  }
+  .handList {
+    position: absolute;
+    left: 70px;
+    top: 25px;
+    > .you {
+      position: absolute;
+      top: 10px;
+      left: 100px;
+      &.hand01 { background-position: left 10px; }
+      &.hand02 { background-position: left -83px; }
+      &.hand03 { background-position: -2px -180px; }
+    }
+    .enemy.selected::before {
+      @include createStyle;
+      width: 84px;
+      height: 85px;
+      background: url(#{$imgPath}pic_selected.png) no-repeat;
+      @include background-size(82px auto);
+      top: 0px;
+      left: 0px;
+    }
+  }
+  .pic.battleStart {
+    display: none;
+    position: absolute;
+    width: 291px;
+    height: 56px;
+    background: url(#{$imgPath}pic_battle_start.png) no-repeat;
+    top: 40px;
+    left: 10px;
+    z-index: 30;
+    opacity: 0;
+  }
+  .pic.battleDraw {
+    display: none;
+    position: absolute;
+    width: 183px;
+    height: 62px;
+    background: url(#{$imgPath}pic_battle_draw.png) no-repeat;
+    top: 40px;
+    left: 64px;
+    z-index: 30;
+    opacity: 0;
+  }
+  &.draw {
+    .pic.battleDraw {
+      display: block;
+      -webkit-animation: startAnime 0.9s 1;
+      animation: startAnime 0.9s 1;
+    }
+  }
+  &.start {
+    .pic.battleStart {
+      display: block;
+      -webkit-animation: startAnime 0.9s 1;
+      animation: startAnime 0.9s 1;
+    }
+    .handList > li {
+      -webkit-animation: handAnime 0.3s infinite;
+      animation: handAnime 0.3s infinite;
+      -webkit-animation-timing-function: steps(1);
+      animation-timing-function: steps(1);
+    }
+  }
+}
+
+.countTime {
+  padding-top: 4px;
+  text-align: center;
+}
+.handList.command {
+  width: 306px;
+  margin: 8px auto 0;
+  @include clearfix;
+  > li {
+    float: left;
+    @include transition(ease-out, 0.1s);
+    &:hover {
+      border-color: #f00;
+      @include transform(scale(1.2));
+    }
+  }
+  > .hand02 {
+    margin: 0 30px;
+    background-position: left -83px;
+  }
+  > .hand03 {
+    background-position: -2px -180px;
+  }
+}
+
+.userDtl {
+  position: relative;
+  margin-top: 14px;
+  text-align: center;
+  .userNameList {
+    position: absolute;
+    @include display-box;
+    width: 100%;
+    top: 0;
+    > li {
+      width: 50%;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+    }
+  }
+  > .pic.vs {
+    vertical-align: middle;
+    img { margin: 0 10px; }
+  }
+}
+
+/* modal */
+.modalBg {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+}
+.modalWindow {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  width: 300px;
+  height: 200px;
+  margin-left: -152px;
+  background: #fff;
+  border-radius: 10px;
+  border: #999 2px solid;
+  .txt {
+    font-size: 14px;
+    line-height: 100px;
+    text-align: center;
+  }
+  .backBtn {
+    width: 140px;
+    margin: 48px auto 0;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3498db), to(#2980b9));
+    border: #eee 1px solid;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 30px;
+    @include box-sizing(border-box);
+    a {
+      display: block;
+      height: 30px;
+      font-size: 14px;
+      color: #fff;
+      text-shadow: rgba(0,0,0,0.6) 1px 1px 1px;
+      text-decoration: none;
+    }
+  }
+  .loding {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.25em;
+    height: 0.25em;
+    margin-left: -8px;
+    border-radius: 50%;
+    font-size: 29px;
+    @include box-shadow(0 -0.4em 0 0 rgba(0, 0, 0, 1), -0.28em -0.28em 0 0 rgba(0, 0, 0, 0.75), -0.4em 0 0 0 rgba(0, 0, 0, 0.5), -0.28em 0.28em 0 0 rgba(0, 0, 0, 0.25));
+    -webkit-animation: 0.85s ajax-loader-rotate steps(8) infinite;
+    animation: 0.85s ajax-loader-rotate steps(8) infinite;
+    opacity: 0.95;
+    z-index: 100;
+  }
+}
+
+/* result page */
+.resultView {
+  position: relative;
+  width: 285px;
+  height: 171px;
+  margin: 20px auto;
+  background: url(#{$imgPath}bg_result.png) no-repeat;
+  > .result {
+    position: absolute;
+    top: 55px;
+    left: 90px;
+  }
+}
+
+/* anime style */
+@-webkit-keyframes ajax-loader-rotate {
+  0% { @include transform(rotate(0deg)); }
+  100% { @include transform(rotate(360deg)); }
+}
+@keyframes ajax-loader-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@-webkit-keyframes handAnime {
+  0% { background-position: left 10px; }
+  33% { background-position: left -83px; }
+  66% { background-position: -2px -180px; }
+  100% { background-position: left 10px; }
+}
+
+@-webkit-keyframes startAnime {
+  0% {
+    @include transform(scale(1) rotate(0));
+    opacity: 1;
+  }
+  30% {
+    @include transform(scale(1) rotate(0));
+    opacity: 1;
+  }
+  100% {
+    @include transform(scale(2.4) rotate(8deg));
+    opacity: 0;
+  }
+}

@@ -1,0 +1,12 @@
+<% extend 'layout.ect' %>
+
+<section>
+    <div class="resultView">
+    <% if @battleResult == 'lose': %>
+        <p class="result"><img src="../img/pic_lose.png" alt=""></p>
+    <% else if @battleResult == 'win': %>
+        <p class="result"><img src="../img/pic_win.png" alt=""></p>
+    <% end %>
+    </div>
+    <p class="btn"><a href="/">TOPへ戻る</a></p>
+</section>
