@@ -1,6 +1,6 @@
 # ウェブ帳 SampleFile Summary
 
-![](http://webcyou.com/img/bnr_webcyou.png)
+![](http://webcyou.com/img/screenshot.png)
 
 ======
 
